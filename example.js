@@ -1,15 +1,31 @@
+
 const CurrencySystem = require('khlav');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const currencySystem = new CurrencySystem();
-
 const mongoURL = process.env.MONGODB_URL || 'your_mongodb_connection_string'; // Replace with your actual MongoDB connection string
-currencySystem.setMongoURL(mongoURL);
 
 async function runExample() {
+  const currencySystem = new CurrencySystem();
+  
+  // Set MongoDB URL!
+  currencySystem.setMongoURL(mongoURL);
+  
+  // Set Default Bank Amount when a new user is created!
+  currencySystem.setDefaultBankAmount(1000);
+  currencySystem.setDefaultWalletAmount(1000);
+  
+  // Its bank space limit (can be changed according to per user) here 0 means infinite.
+  currencySystem.setMaxBankAmount(10000);
+  
+  // Set Default Maximum Amount of Wallet Currency a user can have! (can be changed according to per user) here 0 means infinite.
+  currencySystem.setMaxWalletAmount(10000);
+  
+  // Search for new npm package updates on bot startup! Latest version will be displayed in console.
+  currencySystem.searchForNewUpdate(true);
+
   const userId = '1234567890';
 
   // Set up a test user

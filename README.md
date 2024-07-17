@@ -141,6 +141,30 @@ const topUsers = await currencySystem.getTopUsers();
 console.log('Top Users:', topUsers);
 ```
 
+## Configuration
+
+In the `example.js` file, the following configuration settings are demonstrated:
+
+```javascript
+const currencySystem = new CurrencySystem();
+
+// Set MongoDB URL!
+currencySystem.setMongoURL(mongoURL);
+
+// Set Default Bank Amount when a new user is created!
+currencySystem.setDefaultBankAmount(1000);
+currencySystem.setDefaultWalletAmount(1000);
+
+// Its bank space limit (can be changed according to per user) here 0 means infinite.
+currencySystem.setMaxBankAmount(10000);
+
+// Set Default Maximum Amount of Wallet Currency a user can have! (can be changed according to per user) here 0 means infinite.
+currencySystem.setMaxWalletAmount(10000);
+
+// Search for new npm package updates on bot startup! Latest version will be displayed in console.
+currencySystem.searchForNewUpdate(true);
+```
+
 ## Contributing
 
 Feel free to fork this repository and submit pull requests. We welcome all contributions that improve the functionality and usability of Khlav.
