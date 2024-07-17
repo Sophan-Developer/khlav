@@ -1,119 +1,74 @@
 
-# Khlav
+# Khlav - A Comprehensive Economy and Gambling System
 
-Khlav is an npm package that provides economy and gambling functionalities for your projects, designed to work seamlessly with Discord bots and other applications.
+Khlav is a robust and customizable economy and gambling system for your Node.js applications. It includes features such as managing user balances, inventory, and various gambling games.
 
 ## Features
 
-- **Economy Management**: Handle user balances, deposits, withdrawals, and transfers.
-- **Gambling Games**: Include games like slots and spin with win/loss outcomes.
-- **Rewards System**: Daily and weekly rewards for users.
-- **User Ranking**: Get the top users based on their balance.
+- **Economy Management**: Manage user wallets and bank accounts.
+- **Inventory System**: Add, remove, and manage items in user inventories.
+- **Gambling Games**: Includes slot machine and spin games.
+- **Rewards System**: Claim daily, weekly, and other periodic rewards.
+- **Transfer System**: Transfer money between users.
+- **Leaderboard**: Display top users based on balance.
 
 ## Installation
 
-Install the package via npm:
+Install Khlav using npm:
 
-```bash
+```sh
 npm install khlav
 ```
 
-## Setup
+## Usage
 
-### Environment Variables
+### Setting Up MongoDB
 
-Create a `.env` file in your project root with the following content:
-
-```env
-MONGODB_URI=your_mongodb_connection_string
-```
-
-Replace `your_mongodb_connection_string` with your actual MongoDB connection string.
-
-### Usage
-
-### Initialize MongoDB Connection
-
-In your main application file, initialize the MongoDB connection:
+Set your MongoDB connection URL using the `setMongoURL` method:
 
 ```javascript
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const CurrencySystem = require('khlav');
+const currencySystem = new CurrencySystem();
 
-dotenv.config();
-
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+const mongoURL = 'your_mongodb_connection_string'; // Replace with your actual MongoDB connection string
+currencySystem.setMongoURL(mongoURL);
 ```
 
 ### Economy Functions
 
-#### Get User Balance
+#### Get Balance
 
 ```javascript
-const { economy } = require('khlav');
+const balance = await currencySystem.getBalance(userId);
+console.log(`User Balance: ${balance}`);
+```
 
-async function getUserBalance(userID, guildID) {
-  const balance = await economy.getBalance(userID, guildID);
-  console.log(`User balance: \${balance} coins`);
-}
+#### Get Bank Balance
+
+```javascript
+const bankBalance = await currencySystem.getBankBalance(userId);
+console.log(`User Bank Balance: ${bankBalance}`);
 ```
 
 #### Deposit Money
 
 ```javascript
-async function depositToBank(userID, guildID, amount) {
-  const success = await economy.depositMoney(userID, guildID, amount);
-  console.log(success ? `Deposited \${amount} coins` : `Failed to deposit`);
-}
+const success = await currencySystem.depositMoney(userId, amount);
+console.log(`Deposit Successful: ${success}`);
 ```
 
 #### Withdraw Money
 
-```avascript
-async function withdrawFromBank(userID, guildID, amount) {
-  const success = await economy.withdrawMoney(userID, guildID, amount);
-  console.log(success ? `Withdrew \${amount} coins` : `Failed to withdraw`);
-}
+```javascript
+const success = await currencySystem.withdrawMoney(userId, amount);
+console.log(`Withdrawal Successful: ${success}`);
 ```
 
 #### Transfer Money
 
 ```javascript
-async function transferFunds(senderID, senderGuildID, receiverID, receiverGuildID, amount) {
-  const success = await economy.transferMoney(senderID, senderGuildID, receiverID, receiverGuildID, amount);
-  console.log(success ? `Transferred \${amount} coins` : `Failed to transfer`);
-}
-```
-
-#### Claim Daily Reward
-
-```javascript
-async function claimDaily(userID, guildID) {
-  const result = await economy.claimDailyReward(userID, guildID);
-  console.log(result.success ? `Claimed daily reward of \${result.reward} coins` : result.message);
-}
-```
-
-#### Claim Weekly Reward
-
-```javascript
-async function claimWeekly(userID, guildID) {
-  const result = await economy.claimWeeklyReward(userID, guildID);
-  console.log(result.success ? `Claimed weekly reward of \${result.reward} coins` : result.message);
-}
-```
-
-#### Get Top Users
-
-```javascript
-async function getTopUsers(guildID) {
-  const topUsers = await economy.getTopUsers(guildID);
-  topUsers.forEach((user, index) => {
-    console.log(`\${index + 1}. \${user.username} - \${user.balance} coins`);
-  });
-}
+const success = await currencySystem.transferMoney(senderId, receiverId, amount);
+console.log(`Transfer Successful: ${success}`);
 ```
 
 ### Gambling Functions
@@ -121,102 +76,108 @@ async function getTopUsers(guildID) {
 #### Play Slots
 
 ```javascript
-const { gambling } = require('khlav');
-
-async function playSlotsGame(userID, guildID, amount) {
-  const result = await gambling.playSlots(userID, guildID, amount);
-  if (result) {
-    console.log(result.win ? `You won \${result.amount} coins!` : `You lost \${-result.amount} coins.`);
-  } else {
-    console.log('Failed to play. Please check your balance.');
-  }
-}
+const result = await currencySystem.playSlots(userId, amount);
+console.log(`Slots Result: ${result.win ? 'Win' : 'Lose'}, Amount: ${result.amount}`);
 ```
 
 #### Play Spin
 
 ```javascript
-async function playSpinGame(userID, guildID, amount) {
-  const result = await gambling.playSpin(userID, guildID, amount);
-  if (result) {
-    console.log(result.win ? `You won \${result.amount} coins!` : `You lost \${-result.amount} coins.`);
-  } else {
-    console.log('Failed to play. Please check your balance.');
-  }
+const result = await currencySystem.playSpin(userId, amount);
+console.log(`Spin Result: ${result.win ? 'Win' : 'Lose'}, Amount: ${result.amount}`);
+```
+
+### Rewards Functions
+
+#### Claim Daily Reward
+
+```javascript
+const reward = await currencySystem.claimDailyReward(userId);
+if (reward.success) {
+  console.log(`Daily Reward Claimed: ${reward.reward}`);
+} else {
+  console.log(reward.message);
 }
 ```
 
-## Example Bot Integration
-
-Here's an example of how you can integrate `khlav` with a Discord bot using `discord.js`:
+#### Claim Weekly Reward
 
 ```javascript
-const { Client, GatewayIntentBits } = require('discord.js');
-const { economy, gambling } = require('khlav');
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
-
-client.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
-
-  const args = message.content.split(' ');
-
-  if (args[0] === '!balance') {
-    const balance = await economy.getBalance(message.author.id, message.guild.id);
-    message.reply(`Your balance is \${balance} coins.`);
-  }
-
-  if (args[0] === '!daily') {
-    const result = await economy.claimDailyReward(message.author.id, message.guild.id);
-    message.reply(result.success ? `You have claimed your daily reward of \${result.reward} coins.` : result.message);
-  }
-
-  if (args[0] === '!weekly') {
-    const result = await economy.claimWeeklyReward(message.author.id, message.guild.id);
-    message.reply(result.success ? `You have claimed your weekly reward of \${result.reward} coins.` : result.message);
-  }
-
-  if (args[0] === '!deposit') {
-    const amount = parseInt(args[1], 10);
-    const success = await economy.depositMoney(message.author.id, message.guild.id, amount);
-    message.reply(success ? `You have deposited \${amount} coins to your bank.` : `Failed to deposit. Please check your balance.`);
-  }
-
-  if (args[0] === '!withdraw') {
-    const amount = parseInt(args[1], 10);
-    const success = await economy.withdrawMoney(message.author.id, message.guild.id, amount);
-    message.reply(success ? `You have withdrawn \${amount} coins from your bank.` : `Failed to withdraw. Please check your bank balance.`);
-  }
-
-  if (args[0] === '!transfer') {
-    const receiverID = args[1];
-    const amount = parseInt(args[2], 10);
-    const success = await economy.transferMoney(message.author.id, message.guild.id, receiverID, message.guild.id, amount);
-    message.reply(success ? `You have transferred \${amount} coins to user \${receiverID}.` : `Failed to transfer. Please check your balance.`);
-  }
-
-  if (args[0] === '!slots') {
-    const amount = parseInt(args[1], 10);
-    const result = await gambling.playSlots(message.author.id, message.guild.id, amount);
-    message.reply(result ? (result.win ? `You won \${result.amount} coins!` : `You lost \${-result.amount} coins.`) : `Failed to play. Please check your balance.`);
-  }
-
-  if (args[0] === '!spin') {
-    const amount = parseInt(args[1], 10);
-    const result = await gambling.playSpin(message.author.id, message.guild.id, amount);
-    message.reply(result ? (result.win ? `You won \${result.amount} coins!` : `You lost \${-result.amount} coins.`) : `Failed to play. Please check your balance.`);
-  }
-
-  if (args[0] === '!top') {
-    const topUsers = await economy.getTopUsers(message.guild.id);
-    const leaderboard = topUsers.map((user, index) => `\${index + 1}. \${user.username} - \${user.balance} coins`).join('\n');
-    message.reply(`Top users:\n\${leaderboard}`);
-  }
-});
-
-client.login(process.env.DISCORD_TOKEN);
+const reward = await currencySystem.claimWeeklyReward(userId);
+if (reward.success) {
+  console.log(`Weekly Reward Claimed: ${reward.reward}`);
+} else {
+  console.log(reward.message);
+}
 ```
+
+### Inventory Functions
+
+#### Add Item to Inventory
+
+```javascript
+const item = {
+  name: 'Sword',
+  price: 100,
+  description: 'A sharp blade.'
+};
+const result = await currencySystem.addItem({ guild: { id: guildId }, inventory: item });
+console.log(`Item Added: ${result.item.name}`);
+```
+
+#### Remove Item from Inventory
+
+```javascript
+const result = await currencySystem.removeItem({ guild: { id: guildId }, item: itemId });
+console.log(`Item Removed: ${result.inventory.name}`);
+```
+
+### Leaderboard Functions
+
+#### Get Top Users
+
+```javascript
+const topUsers = await currencySystem.getTopUsers();
+console.log('Top Users:', topUsers);
+```
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests. We welcome all contributions that improve the functionality and usability of Khlav.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache-2.0 License.
+
+<!-- # Templates
+
+This will go through all functions with example's.
+See https://github.com/BIntelligent/currency-system/tree/main/v14-ExampleBot for an example bot. -->
+
+# NEW!
+
+- Added `transferItems()`.
+
+<!-- # Bug Reports -->
+
+<!-- Join our [Support Server](https://discord.gg/stERZwjA9m). -->
+
+<!-- Package Made by: `Be Intelligent#1715`. -->
+
+<!-- # Docs -->
+
+<!-- 📚 [Currency System Documentation](https://currency-system.js.org) (Outdated, please use the GitHub repo, it's always maintained). -->
+
+# For Global Economy
+
+To make it global, remove the following line from every command:
+
+```js
+guild: interaction.guild,
+```
+
+and add:
+
+```js
+guild: { id : null } 
+```
