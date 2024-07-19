@@ -1,6 +1,6 @@
-const event = require("./global").event;
-const inv = require("../models/inventory");
-const cs = require("../models/currency");
+const event = require("../functions/global").event;
+const inv = require("../modules/inventory");
+const cs = require("../modules/currency");
 const { findUser } = require("./management");
 
 async function balance(settings) {

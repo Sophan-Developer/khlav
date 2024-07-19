@@ -1,5 +1,5 @@
-const { event, parseSeconds } = require("./global");
-const cs = require("../models/currency");
+const { event, parseSeconds } = require("../functions/global");
+const cs = require("../modules/currency");
 const { findUser, makeUser, saveUser, amount } = require("./management");
 
 // ===================================================================

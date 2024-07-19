@@ -1,6 +1,6 @@
 {
   "name": "khlav",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "Khlav is a robust and customizable economy and gambling system for your Node.js applications.",
   "main": "src/index.js",
   "scripts": {
@@ -31,9 +31,9 @@
   "author": "Sophan-Developer",
   "license": "MIT",
   "dependencies": {
-    "mongoose": "^8.5.1",
-    "node-fetch": "^2.6.1",
     "discord.js": "^14.15.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.1",
+    "node-fetch": "^2.7.0"
   }
 }

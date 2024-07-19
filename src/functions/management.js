@@ -1,5 +1,5 @@
-const { event, parseSeconds } = require("./global");
-const cs = require("../models/currency");
+const { event, parseSeconds } = require("../functions/global");
+const cs = require("./../modules/currency");
 let wallet; //  makeUser, setDefaultWalletAmount
 let bank; // makeUser, setDefaultBankAmount
 let maxBank; // setMaxBankAmount, amount, findUser, makeUser

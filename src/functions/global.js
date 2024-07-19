@@ -50,10 +50,7 @@ function setMaxWalletAmount(amount) {
 // ===================================================================
 function connect(that, toLog = true) {
   let connected = true;
-  db.connect(that, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  db.connect(that, {})
     .catch((e) => {
       connected = false;
       throw new TypeError(`${e}`);
@@ -263,7 +260,7 @@ function searchForNewUpdate(state = true) {
 async function _checkUpdate() {
   if (!require("node-fetch")) return;
   const packageData = await require("node-fetch")(
-    `https://registry.npmjs.com/currency-system`
+    `https://registry.npmjs.com/khlav`
   ).then((text) => text.json());
   if (
     require("../../package.json").version !== packageData["dist-tags"].latest
@@ -273,7 +270,7 @@ async function _checkUpdate() {
       "\x1b[32m" + "---------------------------------------------------"
     );
     console.log(
-      "\x1b[32m" + "| @ currency-system                        - [] X |"
+      "\x1b[32m" + "| @ khlav                                - [] X |"
     );
     console.log(
       "\x1b[32m" + "---------------------------------------------------"
@@ -292,7 +289,7 @@ async function _checkUpdate() {
         }                  |`
     );
     console.log(
-      "\x1b[36m" + '|        Run "npm i currency-system@latest"       |'
+      "\x1b[36m" + '|        Run "npm i khlav@latest"                |'
     );
     console.log(
       "\x1b[36m" + "|                    to update!                   |"
@@ -301,7 +298,7 @@ async function _checkUpdate() {
       "\x1b[37m" + `|          View the full changelog here:          |`
     );
     console.log(
-      "\x1b[31m" + "|         https://currency-system.js.org          |"
+      "\x1b[31m" + "|         https://www.npmjs.com/package/khlav"
     );
     console.log(
       "\x1b[32m" + "---------------------------------------------------\x1b[37m"
@@ -309,6 +306,7 @@ async function _checkUpdate() {
     console.log("\n\n");
   }
 }
+
 // ===================================================================
 module.exports = {
   setDefaultWalletAmount,
