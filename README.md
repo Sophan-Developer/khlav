@@ -89,6 +89,14 @@ console.log(`Spin Result: ${result.win ? 'Win' : 'Lose'}, Amount: ${result.amoun
 
 ### Rewards Functions
 
+- hourly
+- Daily
+- Weekly
+- monthly
+- hafly
+- quaterly
+- yearly
+
 #### Claim Daily Reward
 
 ```javascript
@@ -164,6 +172,80 @@ currencySystem.setMaxWalletAmount(10000);
 // Search for new npm package updates on bot startup! Latest version will be displayed in console.
 currencySystem.searchForNewUpdate(true);
 ```
+
+## Roleplay Commands
+
+```javascript
+const { getRoleplayGif } = require('khlav');
+
+async function roleplayExample() {
+  const gif = await getRoleplayGif('hug');
+  console.log(gif); // URL of the hug gif
+}
+
+roleplayExample();
+
+```
+
+## Example Bot
+
+```javascript
+const { Client, Intents } = require('discord.js');
+const { CurrencySystem, getRoleplayGif } = require('khlav');
+const cs = new CurrencySystem();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+cs.setMongoURL('your-mongodb-url');
+
+client.once('ready', () => {
+  console.log(`Logged in as ${client.user.tag}`);
+});
+
+client.on('messageCreate', async (message) => {
+  if (message.content.startsWith('!balance')) {
+    const balance = await cs.balance({
+      user: message.author,
+      guild: message.guild,
+    });
+    message.channel.send(`You have ${balance.wallet} in your wallet and ${balance.bank} in your bank.`);
+  }
+
+  if (message.content.startsWith('!hug')) {
+    const gif = await getRoleplayGif('hug');
+    message.channel.send(`${message.author} hugs ${message.mentions.users.first()}\n${gif}`);
+  }
+});
+
+client.login('your-bot-token');
+```
+
+## Roleplay List
+
+- hug
+- pat
+- kiss
+- slap
+- punch
+- smug
+- bonk
+- yeet
+- blush
+- cry
+- cuddle
+- dance
+- cringe
+- highfive
+- kill
+- happy
+- wave
+- wink
+- handhold
+- bite
+- glomp
+- slap
+- kick
+- laugh
+- shoot
 
 ## Contributing
 

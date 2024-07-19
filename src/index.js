@@ -5,6 +5,9 @@ const {
   event,
   saveUser,
 } = require("./functions/global");
+const fetch = require('node-fetch');
+const roleplay = require('./functions/roleplay');
+
 /**
  * @class CurrencySystem
  */
@@ -86,6 +89,7 @@ class CurrencySystem {
       item: item,
     };
   }
+
   async removeItem(settings) {
     let inventoryData = await getInventory(settings);
 
@@ -109,6 +113,7 @@ class CurrencySystem {
       inventory: deletedDB,
     };
   }
+
   async setItems(settings) {
     // let inventoryData = await getInventory(settings);
 
@@ -157,6 +162,7 @@ class CurrencySystem {
       type: "success",
     };
   }
+
   async removeUserItem(settings) {
     let data = await findUser(settings, null, null, "removeUserItem");
     let item = null;
@@ -286,6 +292,7 @@ class CurrencySystem {
       item: item,
     };
   }
+
   async transferItem(settings) {
     if (!settings.guild)
       settings.guild = {
@@ -373,6 +380,231 @@ class CurrencySystem {
       itemsLeft: itemsLeft,
     };
   }
+
+  // Roleplay commands
+  async hug() {
+    return await roleplay.hug();
+  }
+
+  async pat() {
+    return await roleplay.pat();
+  }
+
+  async kiss() {
+    return await roleplay.kiss();
+  }
+
+  async slap() {
+    return await roleplay.slap();
+  }
+
+  async punch() {
+    return await roleplay.punch();
+  }
+
+  async smug() {
+    return await roleplay.smug();
+  }
+
+  async bonk() {
+    return await roleplay.bonk();
+  }
+
+  async yeet() {
+    return await roleplay.yeet();
+  }
+
+  async blush() {
+    return await roleplay.blush();
+  }
+
+  async cry() {
+    return await roleplay.cry();
+  }
+
+  async cuddle() {
+    return await roleplay.cuddle();
+  }
+
+  async dance() {
+    return await roleplay.dance();
+  }
+
+  async cringe() {
+    return await roleplay.cringe();
+  }
+
+  async highfive() {
+    return await roleplay.highfive();
+  }
+
+  async kill() {
+    return await roleplay.kill();
+  }
+
+  async happy() {
+    return await roleplay.happy();
+  }
+
+  async wave() {
+    return await roleplay.wave();
+  }
+
+  async wink() {
+    return await roleplay.wink();
+  }
+
+  async handhold() {
+    return await roleplay.handhold();
+  }
+
+  async bite() {
+    return await roleplay.bite();
+  }
+
+  async glomp() {
+    return await roleplay.glomp();
+  }
+
+  async kick() {
+    return await roleplay.kick();
+  }
+
+  async laugh() {
+    return await roleplay.laugh();
+  }
+
+  async shoot() {
+    return await roleplay.shoot();
+  }
+
+  async stare() {
+    return await roleplay.stare();
+  }
+
+  async think() {
+    return await roleplay.think();
+  }
+
+  async facepalm() {
+    return await roleplay.facepalm();
+  }
+
+  async pout() {
+    return await roleplay.pout();
+  }
+
+  async shrug() {
+    return await roleplay.shrug();
+  }
+
+  async sleep() {
+    return await roleplay.sleep();
+  }
+
+  async bored() {
+    return await roleplay.bored();
+  }
+
+  async tickle() {
+    return await roleplay.tickle();
+  }
+
+  async poke() {
+    return await roleplay.poke();
+  }
+
+  async nosebleed() {
+    return await roleplay.nosebleed();
+  }
+
+  async threaten() {
+    return await roleplay.threaten();
+  }
+
+  async depress() {
+    return await roleplay.depress();
+  }
+
+  async rage() {
+    return await roleplay.rage();
+  }
+
+  async nervous() {
+    return await roleplay.nervous();
+  }
+
+  async shy() {
+    return await roleplay.shy();
+  }
+
+  async lick() {
+    return await roleplay.lick();
+  }
+
+  async bully() {
+    return await roleplay.bully();
+  }
+
+  async kickbutt() {
+    return await roleplay.kickbutt();
+  }
+
+  async bored2() {
+    return await roleplay.bored2();
+  }
+
+  async bored3() {
+    return await roleplay.bored3();
+  }
+
+  async tired() {
+    return await roleplay.tired();
+  }
+
+  async thumbsUp() {
+    return await roleplay.thumbsUp();
+  }
+
+  async confused() {
+    return await roleplay.confused();
+  }
+
+  async agreement() {
+    return await roleplay.agreement();
+  }
+
+  async joke() {
+    return await roleplay.joke();
+  }
+
+  async dance2() {
+    return await roleplay.dance2();
+  }
+
+  async dance3() {
+    return await roleplay.dance3();
+  }
+
+  async surprise() {
+    return await roleplay.surprise();
+  }
+
+  async greet() {
+    return await roleplay.greet();
+  }
+
+  async bye() {
+    return await roleplay.bye();
+  }
+
+  async shy2() {
+    return await roleplay.shy2();
+  }
+
+  async blush2() {
+    return await roleplay.blush2();
+  }
 }
 
 Object.assign(CurrencySystem.prototype, require("./functions/global"));
@@ -384,6 +616,7 @@ function _getDbURL() {
     url = require("mongoose").connections[0]._connectionString;
   return url;
 }
+
 module.exports.cs = event;
 
 async function _buy(settings) {
@@ -468,6 +701,7 @@ async function _buy(settings) {
     amount: amount_to_add,
   };
 }
+
 function makeid(length = 5) {
   let result = "";
   let characters =

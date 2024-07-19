@@ -1,5 +1,5 @@
 
-const CurrencySystem = require('khlav');
+const { CurrencySystem, getRoleplayGif } = require('khlav');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -105,4 +105,23 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
   })
   .catch(err => {
     console.error('Failed to connect to MongoDB', err);
+  });
+
+  client.once('ready', () => {
+    console.log(`Logged in as ${client.user.tag}`);
+  });
+  
+  client.on('messageCreate', async (message) => {
+    if (message.content.startsWith('!balance')) {
+      const balance = await cs.balance({
+        user: message.author,
+        guild: message.guild,
+      });
+      message.channel.send(`You have ${balance.wallet} in your wallet and ${balance.bank} in your bank.`);
+    }
+  
+    if (message.content.startsWith('!hug')) {
+      const gif = await getRoleplayGif('hug');
+      message.channel.send(`${message.author} hugs ${message.mentions.users.first()}\n${gif}`);
+    }
   });
