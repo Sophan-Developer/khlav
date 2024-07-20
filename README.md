@@ -176,22 +176,41 @@ currencySystem.searchForNewUpdate(true);
 ## Roleplay Commands
 
 ```javascript
-const { getRoleplayGif } = require('khlav');
+const { getGif } = require('khlav');
 
-async function roleplayExample() {
-  const gif = await getRoleplayGif('hug');
-  console.log(gif); // URL of the hug gif
+async function runExample() {
+  try {
+    const gif = await getGif('hug');
+    console.log(gif); // URL of the hug gif
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-roleplayExample();
+runExample();
 
+```
+```javascript
+const klv = require('khlav');
+
+//In this example we use the anime bite endpoint
+klv.getGif('bite').then((data) => {
+  console.log(data) // This return as example: https://apiservice1.kisara.app/satou/interactions/bite/6.gif
+})
+
+//OR with async/await function
+
+const data = async() => {
+  const data = await klv.getGif('bite');
+  console.log(data); // This return as example: https://apiservice1.kisara.app/satou/interactions/bite/3.gif
+}
 ```
 
 ## Example Bot
 
 ```javascript
 const { Client, Intents } = require('discord.js');
-const { CurrencySystem, getRoleplayGif } = require('khlav');
+const { CurrencySystem, getGif } = require('khlav');
 const cs = new CurrencySystem();
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -211,7 +230,7 @@ client.on('messageCreate', async (message) => {
   }
 
   if (message.content.startsWith('!hug')) {
-    const gif = await getRoleplayGif('hug');
+    const gif = await getGif('hug');
     message.channel.send(`${message.author} hugs ${message.mentions.users.first()}\n${gif}`);
   }
 });
@@ -221,31 +240,37 @@ client.login('your-bot-token');
 
 ## Roleplay List
 
-- hug
-- pat
-- kiss
-- slap
-- punch
-- smug
-- bonk
-- yeet
-- blush
-- cry
+- angry
+- anime
+- bite
+- bored
+- bread
+- chocolate
+- cookie
 - cuddle
 - dance
-- cringe
-- highfive
-- kill
+- drunk
 - happy
-- wave
-- wink
-- handhold
-- bite
-- glomp
-- slap
+- hug
 - kick
+- kill
+- kiss
 - laugh
-- shoot
+- lick
+- lonely
+- pat
+- poke
+- pregnant
+- punch
+- run
+- satouselfies
+- slap
+- sleep
+- spank
+- spit
+- steal
+- tickle
+- nomm
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 {
   "name": "khlav",
-  "version": "1.0.7",
+  "version": "1.1.7",
   "description": "Khlav is a robust and customizable economy and gambling system for your Node.js applications.",
   "main": "src/index.js",
   "scripts": {
